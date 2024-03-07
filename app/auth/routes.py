@@ -6,7 +6,6 @@ from flask import request, jsonify
 from app.models.user import User
 from app.utils.jwt_utils import generate_token
 from app import db
-from app.models.user import User
 from app.auth import auth_bp
 
 

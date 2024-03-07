@@ -13,6 +13,15 @@ import pandas as pd
 
 
 def generate_calorie_chart_pdf(dataframe):
+    """
+    Generate a PDF report with a calorie intake chart.
+
+    Args:
+        dataframe (pandas.DataFrame): DataFrame containing calorie intake data.
+
+    Returns:
+        bytes: The PDF content as bytes.
+    """
     # Sort DataFrame by date
     dataframe = dataframe.sort_values("Date").reset_index(drop=True)
 

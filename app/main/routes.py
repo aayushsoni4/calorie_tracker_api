@@ -4,16 +4,17 @@ sys.dont_write_bytecode = True
 
 from flask import request, jsonify, make_response, url_for
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
+from datetime import datetime, timedelta
+from io import StringIO
+import pandas as pd
+
 from app.models.calorie_intake import CalorieIntake
 from app.models.calorie_charts import CalorieChart
 from app.models.user import User
 from app import db
-import pandas as pd
-from datetime import datetime, timedelta
 from app.utils.charts_utils import generate_calorie_chart_pdf
 from app.utils.jwt_utils import encrypt, decrypt
 from app.main import main_bp
-from io import StringIO
 
 
 @main_bp.route("/intake", methods=["POST"])
@@ -338,7 +339,7 @@ def get_user_profile():
         "user_id": user.id,
         "username": user.username,
         "email": user.email,
-        "token_expires_in": f"{int(minutes)} mins {int(seconds)} secs"
+        "token_expires_in": f"{int(minutes)} mins {int(seconds)} secs",
     }
 
     return jsonify(user_profile), 200

@@ -10,6 +10,7 @@ from cryptography.fernet import Fernet, InvalidToken
 from dotenv import load_dotenv
 import os
 
+# Load environment variables from .env file
 load_dotenv()
 
 
@@ -46,20 +47,36 @@ def jwt_required(func):
             get_jwt_identity()
         except:
             return jsonify({"error": "Invalid token"}), 401
-
         return func(*args, **kwargs)
 
     return wrapper
 
 
-cipher_suite = Fernet("zQnZn0OLUGF7ob5bSw3zcw2mYy3_oqKm5BBb5R3TnNo=")
+# Initialize the Fernet cipher suite with the secret key from environment variable
+cipher_suite = Fernet(os.getenv("FERNET_SECRET_KEY"))
 
 
-# Encrypt the user_id
 def encrypt(user_id):
+    """
+    Encrypt the user ID using Fernet encryption.
+
+    Args:
+        user_id (int): The user ID to encrypt.
+
+    Returns:
+        str: The encrypted user ID.
+    """
     return cipher_suite.encrypt(str(user_id).encode()).decode()
 
 
-# Decrypt the encrypted user_id
 def decrypt(encrypted_user_id):
+    """
+    Decrypt the encrypted user ID using Fernet decryption.
+
+    Args:
+        encrypted_user_id (str): The encrypted user ID to decrypt.
+
+    Returns:
+        int: The decrypted user ID.
+    """
     return int(cipher_suite.decrypt(encrypted_user_id.encode()).decode())
