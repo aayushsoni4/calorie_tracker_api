@@ -122,14 +122,16 @@ Logs in a user and returns an authentication token.
       ```
 
   - **Error Responses**:
+    - **Status Code**: `400 Bad Request`
+      - Missing required fields.
     - **Status Code**: `401 Unauthorized`
-      - Missing or invalid authentication token.
+      - Invalid username/email or password.
     - **Status Code**: `404 Not Found`
-      - Resource not found.
+      - User not found.
     - **Status Code**: `500 Internal Server Error`
       - Unexpected server error.
 
-  Now, users will be informed that the authentication token is valid for `30 minutes` upon successful login.
+The login route successfully handles requests to authenticate users. Upon successful authentication, it returns a JSON Web Token (`token`) along with an informative message indicating that the token is valid for 30 minutes (`expiration`). In case of errors or missing data in the request, appropriate error responses are returned with relevant messages.
 
 ### User Calorie Intake Management
 
@@ -217,7 +219,32 @@ Exports the user's calorie intake data as a CSV file.
 - **Endpoint**: `/user/csv`
 - **Method**: `GET`
 - **Authorization Header**: `Bearer <token>`
-- **Response**: Success message with a download link.
+- **Query Parameters**:
+  - `start_date` (optional): The start date in the format `YYYY-MM-DD`.
+  - `end_date` (optional): The end date in the format `YYYY-MM-DD`.
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Body**:
+
+    ```json
+    {
+      "csv_url": "https://example.com/download/csv?user_id=encrypted_user_id",
+      "message": "CSV file generated successfully."
+    }
+    ```
+
+  - **Error Responses**:
+    - **Status Code**: `400 Bad Request`
+      - Invalid date format.
+    - **Status Code**: `401 Unauthorized`
+      - Missing or invalid authentication token.
+    - **Status Code**: `404 Not Found`
+      - No CSV data found for the user.
+    - **Status Code**: `500 Internal Server Error`
+      - Unexpected server error.
+
+The `/user/csv` endpoint retrieves the user's calorie intake data within the specified date range, if provided, and generates a CSV file. The CSV file is stored in the database for future reference and a download link (`csv_url`) is returned in the response along with a success message. Optional query parameters `start_date` and `end_date` can be used to filter the data. In case of errors, appropriate error responses are returned with relevant messages.
 
 #### Export Calorie Intake Data as Chart
 
@@ -226,4 +253,29 @@ Exports the user's calorie intake data as a chart image.
 - **Endpoint**: `/user/chart`
 - **Method**: `GET`
 - **Authorization Header**: `Bearer <token>`
-- **Response**: Success message with a download link.
+- **Query Parameters**:
+  - `start_date` (optional): The start date in the format `YYYY-MM-DD`.
+  - `end_date` (optional): The end date in the format `YYYY-MM-DD`.
+- **Response**:
+
+  - **Status Code**: `200 OK`
+  - **Body**:
+
+    ```json
+    {
+      "pdf_url": "https://example.com/download/pdf?user_id=encrypted_user_id",
+      "message": "PDF file generated successfully."
+    }
+    ```
+
+  - **Error Responses**:
+    - **Status Code**: `400 Bad Request`
+      - Invalid date format.
+    - **Status Code**: `401 Unauthorized`
+      - Missing or invalid authentication token.
+    - **Status Code**: `404 Not Found`
+      - No PDF data found for the user.
+    - **Status Code**: `500 Internal Server Error`
+      - Unexpected server error.
+
+The `/user/chart` endpoint retrieves the user's calorie intake data within the specified date range, if provided, and generates a PDF report with a calorie intake chart. The PDF report is stored in the database for future reference and a download link (`pdf_url`) is returned in the response along with a success message. Optional query parameters `start_date` and `end_date` can be used to filter the data. In case of errors, appropriate error responses are returned with relevant messages.

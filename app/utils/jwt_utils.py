@@ -52,8 +52,7 @@ def jwt_required(func):
     return wrapper
 
 
-# Initialize the Fernet cipher suite with the secret key from environment variable
-cipher_suite = Fernet(os.getenv("FERNET_SECRET_KEY"))
+cipher_suite = Fernet('zQnZn0OLUGF7ob5bsw3zcw2mYy3_oqKm5BBb5R3TnNo=')
 
 
 def encrypt(user_id):
