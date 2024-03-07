@@ -86,8 +86,7 @@ Registers a new user with the application.
 
       ```json
       {
-        "message": "User registered successfully",
-        "user_id": 123
+        "message": "User registered successfully"
       }
       ```
 
@@ -117,8 +116,8 @@ Logs in a user and returns an authentication token.
 
       ```json
       {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0NTY3ODkwLCJ1c2VybmFtZSI6ImV4YW1wbGVfdXNlciIsImV4cCI6MTY0NTc5MTUyNX0.Jcf1onmI6NlO8yLoYOjgZVeZThf4FakXoZ-tiPs1n9w",
-        "expiration": "Token is valid for 30 minutes"
+        "expiration": "Token is valid for 30 minutes",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0NTY3ODkwLCJ1c2VybmFtZSI6ImV4YW1wbGVfdXNlciIsImV4cCI6MTY0NTc5MTUyNX0.Jcf1onmI6NlO8yLoYOjgZVeZThf4FakXoZ-tiPs1n9w"
       }
       ```
 
@@ -146,12 +145,12 @@ Adds daily calorie intake for the authenticated user.
   ```json
   [
     {
-      "date": "YYYY-MM-DD",
-      "calories": 1500
+      "calories": 1500,
+      "date": "YYYY-MM-DD"
     },
     {
-      "date": "YYYY-MM-DD",
-      "calories": 1800
+      "calories": 1800,
+      "date": "YYYY-MM-DD"
     }
   ]
   ```
@@ -160,8 +159,8 @@ Adds daily calorie intake for the authenticated user.
 
   ```json
   {
-    "date": "YYYY-MM-DD",
-    "calories": 1500
+    "calories": 1500,
+    "date": "YYYY-MM-DD"
   }
   ```
 
@@ -202,9 +201,10 @@ Retrieves the profile of the currently authenticated user.
 
   ```json
   {
+    "email": "example@example.com",
+    "token_expires_in": "30 mins 0 secs",
     "user_id": 123,
-    "username": "example_user",
-    "email": "example@example.com"
+    "username": "example_user"
   }
   ```
 
